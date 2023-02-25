@@ -1,3 +1,9 @@
+/*
+ * Programmer: Y Ha
+ * Date: Winter 2023
+ * Purpose: This program uses methods Methods with passing a parameter as pass-by-reference out, If-else,Boolean expressions (conditions) with AND (&&) , OR (||), TryParse(),bool data type variables
+ */
+
 using System;
 using static System.Console;
 
@@ -24,7 +30,7 @@ namespace WeightedAverageCalc
             float totalWeightedAverage = 0;
 
 
-            Title = "CSIS1175 - Assignment 3 - By [write your name here]";
+            Title = "CSIS1175 - Assignment 4 - By Y Ha";
 
             DisplayBanner("Total Weighted Average Calculator");
 
@@ -32,52 +38,65 @@ namespace WeightedAverageCalc
             bool isInputValid;
 
             isInputValid = GetUserInput("Assignments", 0, 100, out assignments);
-            isInputValid = GetUserInput("Midterm Exam", 0, 100, out midtermExam);
-            isInputValid = GetUserInput("Quiz1", 0, 100, out quiz1);
-            isInputValid = GetUserInput("Quiz2", 0, 100, out quiz2);
-            isInputValid = GetUserInput("Final Exam", 0, 100, out finalExam);
-
-            WriteLine("\n");
-
-            // Total Weighted Average is sum of products of grades and their weight
-            if (isInputValid == true && assignments >= 0 && assignments <= 100 && midtermExam >= 0 && midtermExam <= 100
-                && quiz1 >= 0 && quiz1 <= 100 && quiz2 >= 0 && quiz2 <= 100 && finalExam >= 0 && finalExam <= 100)
+            if (isInputValid == true)
             {
-                totalWeightedAverage += WeightedGrade(assignments, ASSIGNMENTS_PERCENTAGE);
-                totalWeightedAverage += WeightedGrade(midtermExam, MIDTERM_EXAM_PERCENTAGE);
-                totalWeightedAverage += WeightedGrade((quiz1 + quiz2), QUIZ_PERCENTAGE);
-                totalWeightedAverage += WeightedGrade(finalExam, FINAL_EXAM_PERCENTAGE);
+                isInputValid = GetUserInput("Midterm Exam", 0, 100, out midtermExam);
+                if (isInputValid == true)
+                {
+                    isInputValid = GetUserInput("Quiz1", 0, 100, out quiz1);
+                    if (isInputValid == true)
+                    {
+                        isInputValid = GetUserInput("Quiz2", 0, 100, out quiz2);
+                        if (isInputValid == true)
+                        {
+                            isInputValid = GetUserInput("Final Exam", 0, 100, out finalExam);
+                            if (isInputValid == true)
 
-                DisplayTableRow("Assessment", "Percentage", "Your Grade");
-                DisplayTableRow("--------------", " -----------", "----------");
+                            {
+                                WriteLine("\n");
+                                // Total Weighted Average is sum of products of grades and their weight
+                                totalWeightedAverage += WeightedGrade(assignments, ASSIGNMENTS_PERCENTAGE);
+                                totalWeightedAverage += WeightedGrade(midtermExam, MIDTERM_EXAM_PERCENTAGE);
+                                totalWeightedAverage += WeightedGrade((quiz1 + quiz2), QUIZ_PERCENTAGE);
+                                totalWeightedAverage += WeightedGrade(finalExam, FINAL_EXAM_PERCENTAGE);
 
-                DisplayTableRow("Assignments", ASSIGNMENTS_PERCENTAGE, assignments, LetterGrade(assignments));
-                DisplayTableRow("MidTerm Exam", MIDTERM_EXAM_PERCENTAGE, midtermExam, LetterGrade(midtermExam));
-                DisplayTableRow("Quiz1", QUIZ_PERCENTAGE, quiz1, LetterGrade(quiz1));
-                DisplayTableRow("Quiz2", QUIZ_PERCENTAGE, quiz2, LetterGrade(quiz2));
-                DisplayTableRow("Final Exam", FINAL_EXAM_PERCENTAGE, finalExam, LetterGrade(finalExam));
+                                DisplayTableRow("Assessment", "Percentage", "Your Grade");
+                                DisplayTableRow("--------------", " -----------", "----------");
 
-                WriteLine("----------------------------------------");
+                                DisplayTableRow("Assignments", ASSIGNMENTS_PERCENTAGE, assignments, LetterGrade(assignments));
+                                DisplayTableRow("MidTerm Exam", MIDTERM_EXAM_PERCENTAGE, midtermExam, LetterGrade(midtermExam));
+                                DisplayTableRow("Quiz1", QUIZ_PERCENTAGE, quiz1, LetterGrade(quiz1));
+                                DisplayTableRow("Quiz2", QUIZ_PERCENTAGE, quiz2, LetterGrade(quiz2));
+                                DisplayTableRow("Final Exam", FINAL_EXAM_PERCENTAGE, finalExam, LetterGrade(finalExam));
 
-                // change the following line of code such that the Floor value of totalWeightedAverage is displayed on Console
-                DisplayTableRow("Weighted Total", 1, (float)Math.Floor(totalWeightedAverage), LetterGrade(totalWeightedAverage)); //** Change only this line **//
+                                WriteLine("----------------------------------------");
 
-                WriteLine("\n");
+                                // change the following line of code such that the Floor value of totalWeightedAverage is displayed on Console
+                                DisplayTableRow("Weighted Total", 1, (float)Math.Floor(totalWeightedAverage), LetterGrade(totalWeightedAverage)); //** Change only this line **//
 
-                weightedExams += WeightedGrade(midtermExam, MIDTERM_EXAM_PERCENTAGE);
-                weightedExams += WeightedGrade((quiz1 + quiz2), QUIZ_PERCENTAGE);
-                weightedExams += WeightedGrade(finalExam, FINAL_EXAM_PERCENTAGE);
-                weightedExams /= 0.8f;
+                                WriteLine("\n");
+
+                                weightedExams += WeightedGrade(midtermExam, MIDTERM_EXAM_PERCENTAGE);
+                                weightedExams += WeightedGrade((quiz1 + quiz2), QUIZ_PERCENTAGE);
+                                weightedExams += WeightedGrade(finalExam, FINAL_EXAM_PERCENTAGE);
+                                weightedExams /= 0.8f;
+
+                                // change the following line of code such that the Ceiling value of weightedExams is displayed on Console
+                                WriteLine("The Weighted Average Total on Exams (Midterm, Quizzes, Final exam) is {0:F2} ({1})", Math.Ceiling(weightedExams), LetterGrade(weightedExams)); //** Change only this line **//
+                                if (weightedExams >= 50)
+                                {
+                                    WriteLine("The student PASSES the course.");
+                                }
+                                else
+                                    WriteLine("The student FAILS the course.");
+                            }
+
+                        }
+                    }
+                }
 
             }
-            else
-                Write("\nPress a key to quit...");
-            ReadKey();
-
-            // change the following line of code such that the Ceiling value of weightedExams is displayed on Console
-            WriteLine("The Weighted Average Total on Exams (Midterm, Quizzes, Final exam) is {0:F2}", Math.Ceiling(weightedExams)); //** Change only this line **//
-            WriteLine("If WAT-on-Exams is less than 50, the student fails the course.");
-
+            Write("\nPress a key to quit...");
             ReadKey();
         }
 
@@ -93,16 +112,16 @@ namespace WeightedAverageCalc
             {
                 WriteLine("!!!!!\nThe value for {0} must be a number!\n!!!!!", textMessage);
                 userInputValue = 0;
-                return isValidInput;
+                return false;
             }
             else if (userInputValue < min || userInputValue > max)
             {
                 WriteLine("!!!!!\nThe value input for {0} must be a number between 0 and 100 inclusive!\n!!!!!", textMessage);
                 userInputValue = 0;
-                return isValidInput;
+                return false;
             }
             else
-                return isValidInput;
+                return true;
         }
         static void DisplayBanner(string textMessage)
         {
@@ -122,7 +141,7 @@ namespace WeightedAverageCalc
         // this method display a row in a table with 3 columns
         static void DisplayTableRow(string column1, float column2, float column3, string column4)
         {
-            WriteLine("{0,14}{1,13:P0}   {2,-15:F2}", column1, column2, column3, column4);
+            WriteLine("{0,14}{1,13:P0}   {2,-7:F2} {3,-15}", column1, column2, column3, column4);
         }
 
         // this method receives grade and weight and returns product of these two parameters as weightedGrade 
@@ -130,48 +149,47 @@ namespace WeightedAverageCalc
         {
             return grade * weight;
         }
-       
-      
+
+
         static string LetterGrade(float grade)
         {
-            Write(grade);
             if (grade >= 95)
             {
                 return "A+";
             }
-            else if (grade <= 94 && grade >= 90)
+            else if (grade >= 90)
             {
                 return "A";
             }
-            else if (grade <= 89 && grade >= 85)
+            else if (grade >= 85)
             {
                 return "A-";
             }
-            else if (grade <= 84 && grade >= 80)
+            else if (grade >= 80)
             {
                 return "B+";
             }
-            else if (grade <= 79 && grade >= 75)
+            else if (grade >= 75)
             {
                 return "B";
             }
-            else if (grade <= 74 && grade >= 70)
+            else if (grade >= 70)
             {
                 return "B-";
             }
-            else if (grade <= 69 && grade >= 65)
+            else if (grade >= 65)
             {
                 return "C+";
             }
-            else if (grade <= 64 && grade >= 60)
+            else if (grade >= 60)
             {
                 return "C";
             }
-            else if (grade <= 59 && grade >= 55)
+            else if (grade >= 55)
             {
                 return "C-";
             }
-            else if (grade <= 54 && grade >= 50)
+            else if (grade >= 50)
             {
                 return "P";
             }
